@@ -1,1 +1,78 @@
 # RUBIKcronometro
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubik's Cube Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .timer {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="buttons">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script>
+        let timerInterval;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        function formatTime() {
+            let sec = seconds < 10 ? '0' + seconds : seconds;
+            let min = minutes < 10 ? '0' + minutes : minutes;
+            let hr = hours < 10 ? '0' + hours : hours;
+            return hr + ':' + min + ':' + sec;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                seconds++;
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+                document.getElementById('timer').innerText = formatTime();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            document.getElementById('timer').innerText = formatTime();
+        }
+    </script>
+</body>
+</html>
